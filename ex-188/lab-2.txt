@@ -1,1 +1,13 @@
+Practice Exam 2 - Working inside container, podman exec cp
 
+1) use image httpd:latest
+2) run in detached mode
+3) container name "test2"
+4) bind container port 80 to port 8002
+
+=> Working inside container-
+1) create /html directory in container
+2) copy some local files into the container
+3) run httpd -k restart
+
+REF:https://www.youtube.com/watch?v=sKB8X9Uo8cg&list=PLnFCwVWiQz4lbdsIPt_eqnNd3-p2we0qd&index=3
