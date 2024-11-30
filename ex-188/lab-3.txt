@@ -1,0 +1,21 @@
+
+Practice Exam 3 - Environment variables in containers
+
+Create 2 containers:-
+
+1) 1st container name - "container-1"
+2) 2nd container name - "container-2"
+3) use image  tsrana1/spring-boot-hello-world:latest
+4) run container in background
+5) bind both containers port 8080 to local port 8003
+6) set environment variables-
+   i)  container - RUN_ENV=container1
+   ii) container - RUN_ENV=container2 
+
+#COMMAND#
+#podman run -d --name container1 -p 8003:8080 -e RUN_ENV=container1 tsrana1/spring-boot-hello-world:latest
+#podman stop container1
+#podman run -d --name container2 -p 8003:8080 -e RUN_ENV=container2 tsrana1/spring-boot-hello-world:latest
+
+https://www.youtube.com/watch?v=rwENZALWFVI&list=PLnFCwVWiQz4lbdsIPt_eqnNd3-p2we0qd&index=4
+
