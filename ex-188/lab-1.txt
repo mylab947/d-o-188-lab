@@ -8,7 +8,8 @@ Practice Exam 1 - Creating Container with volume binding
 
 => container should take "/local/path/index.html" from local file.
 
+#COMMAND#
+##  podman run -d --name test1 -p 8001:80 -v /home/admin/d-o-188-lab/ex-188/lab-1/web01:/usr/local/apache2/htdocs:z httpd:latest
+
 REF:https://www.youtube.com/watch?v=LoJrxtsEhxc&list=PLnFCwVWiQz4lbdsIPt_eqnNd3-p2we0qd&index=2
 
-## Sample Command
-## podman run -d --name test1 -p 8001:80 -v /home/admin/d-o-188-lab/ex-188/lab-1:/usr/local/apache2/htdocs:z httpd:latest
