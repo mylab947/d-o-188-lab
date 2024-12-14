@@ -1,0 +1,9 @@
+#subscription-manager repos --enable codeready-builder-for-rhel-8-$(arch)-rpms
+subscription-manager repos --enable codeready-builder-for-rhel-9-$(arch)-rpms
+
+#dnf install https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm
+dnf install https://dl.fedoraproject.org/pub/epel/epel-release-latest-9.noarch.rpm
+
+dnf install podman-compose -y
+
+###https://stackoverflow.com/questions/77411286/i-cant-use-the-command-podman-compose-in-rhel-9/77448532
