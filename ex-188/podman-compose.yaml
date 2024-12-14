@@ -1,0 +1,27 @@
+services:
+  redis:
+    image: redis-pimcore:local
+    container_name: myredis
+    networks:
+       - applicationnetwork
+    volumes:
+       - redisdata:/data
+    environment: REDIS_PASSWORD=secret
+
+  nginx:
+    image: nginx
+    container_name: nginx
+    networks:
+       - applicationnetwork
+    volumes:
+       - ./html/:/usr/share/nginx/html
+    ports:
+       - "8080:80"
+    depends_on:
+       - redis
+
+networks:
+  applicationnetwork:
+
+volumes:
+  redisdata:
