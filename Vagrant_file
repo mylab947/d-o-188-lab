@@ -61,3 +61,73 @@ end
    SHELL
 end
 '
+
+
+###################################################################################
+
+1) Some updates need to be done on SERVER " vagrant ssh registry "
+sudo su -
+rpm --import https://repo.almalinux.org/almalinux/RPM-GPG-KEY-AlmaLinux
+dnf install -y podman
+podman run -d -p 5000:5000 --name registry registry:2
+echo " 192.168.88.5 registry.do180.lab" >> /etc/hosts
+echo " 192.168.88.4 workstation.do180.lab" >> /etc/hosts
+## Add below blocks to " vi /etc/containers/registries.conf "
+#Add this and see in screenshot>>>
+[registries]
+
+#Add this and see in screenshot>>>
+[registries.search]
+registries = ['registry.access.redhat.com', 'registry.redhat.io', 'docker.io', 'registry.do180.lab:5000']
+[registries.insecure]
+registries = ['registry.do180.lab:5000']
+
+#######Let’s do this below steps after config modified above#######
+podman search httpd ####searching from the public repos
+podman pull httpd
+####pull image from public repos
+podman tag httpd:latest registry.do180.lab:5000/httpd:latest ####tag the image before pushing to the
+local repo(registry.do180.lab:5000)
+podman push registry.do180.lab:5000/httpd:latest
+repo(registry.do180.lab:5000)
+curl http://registry.do180.lab:5000/v2/_catalog
+####PUSH the image to the local
+####Verify the local repos in the local repo directory
+
+
+
+###################################################################################
+
+
+
+2) Some updates need to be done on CLIENT " vagrant ssh workstation "
+sudo su -
+rpm --import https://repo.almalinux.org/almalinux/RPM-GPG-KEY-AlmaLinux
+dnf install -y podman
+echo " 192.168.88.5 registry.do180.lab" >> /etc/hosts
+echo " 192.168.88.4 workstation.do180.lab" >> /etc/hosts
+## Add below blocks to " vi /etc/containers/registries.conf "
+#Add this and see in screenshot>>> [registries]
+
+##Add this entries below
+[registries.search]
+###registries = ['registry.access.redhat.com', 'registry.redhat.io', 'docker.io', 'registry.do180.lab:5000']
+registries = ['registry.do180.lab:5000']
+[registries.insecure]
+registries = ['registry.do180.lab:5000']
+
+###### To confirm repos is working or not
+###### Login to the CLIENT
+vagrant ssh workstatsion
+sudo su -
+curl http://registry.do180.lab:5000/v2/
+#### Verify from client to the server: If the registry is
+running, you'll see an empty JSON response ({}).
+curl http://registry.do180.lab:5000/v2/_catalog #### If "httpd" is listed, then you can list its tags:
+### after verifying all things, we can start the tasks:
+podman search httpd
+podman pull httpd
+##DONE to lab setup
+
+###################################################################################
+
